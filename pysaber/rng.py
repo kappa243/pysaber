@@ -1,7 +1,3 @@
-# rng.py
-
-import os
-
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
@@ -98,9 +94,6 @@ def randombytes_init(entropy_input, personalization_string=None, security_streng
     AES256_CTR_DRBG_Update(seed_material, DRBG_ctx.Key, DRBG_ctx.V)
     DRBG_ctx.reseed_counter = 1
 
-    print("DRBG_ctx.Key:", DRBG_ctx.Key.hex())
-    print("DRBG_ctx.V:", DRBG_ctx.V.hex())
-
 
 def randombytes(x, xlen):
     block = bytearray(16)
@@ -127,8 +120,6 @@ def randombytes(x, xlen):
     AES256_CTR_DRBG_Update(None, DRBG_ctx.Key, DRBG_ctx.V)
     DRBG_ctx.reseed_counter += 1
 
-    print("x:", x.hex())
-
     return RNG_SUCCESS
 
 
@@ -145,8 +136,6 @@ def AES256_CTR_DRBG_Update(provided_data, Key, V):
 
         temp_view = memoryview(temp)[16 * i : 16 * (i + 1)]
         AES256_ECB(Key, V, temp_view)
-
-    print("temp:", temp.hex())
 
     if provided_data:
         temp = bytearray([temp[i] ^ provided_data[i] for i in range(48)])
