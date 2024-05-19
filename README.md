@@ -17,3 +17,7 @@ poetry install
 ```bash
 poetry run main
 ```
+5. [Optional] Run tests:
+```bash
+poetry run pytest
+```
