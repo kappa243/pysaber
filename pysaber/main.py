@@ -1,7 +1,11 @@
 #!/usr/bin/python3
 
 
-from pysaber.rng import DRBG_ctx, randombytes, randombytes_init
+import hashlib
+
+from pysaber.rng import randombytes_init
+from pysaber.saber_indcpa import indcpa_kem_keypair
+from pysaber.saber_params import SABER_NOISE_SEEDBYTES, SABER_SEEDBYTES
 
 
 def main():
@@ -11,15 +15,12 @@ def main():
     for i in range(48):
         entropy_input[i] = i
 
-    print(entropy_input.hex())
-
     randombytes_init(entropy_input)
     
     ##
-
-    x = bytearray(32)
-
-    randombytes(x, 32)
+    
+    indcpa_kem_keypair(None, None)
+        
 
     pass
 

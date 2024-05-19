@@ -1,8 +1,11 @@
 import pytest
 
+from pysaber.rng import randombytes, randombytes_init
+from tests.common import rng_init
+
 
 def test_randombytes_init():
-    from pysaber.rng import DRBG_ctx, randombytes_init
+    from pysaber.rng import DRBG_ctx
 
     entropy_input = bytearray(48)
 
@@ -16,14 +19,9 @@ def test_randombytes_init():
 
 
 def test_randombytes():
-    from pysaber.rng import randombytes, randombytes_init
 
-    entropy_input = bytearray(48)
+    rng_init()
 
-    for i in range(48):
-        entropy_input[i] = i
-
-    randombytes_init(entropy_input)
 
     x = bytearray(32)
 

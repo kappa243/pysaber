@@ -12,6 +12,7 @@ main = "pysaber.main:main"
 [tool.poetry.dependencies]
 python = "^3.10"
 cryptography = "^42.0.7"
+numpy = "^1.26.4"
 
 
 [tool.poetry.group.dev.dependencies]
