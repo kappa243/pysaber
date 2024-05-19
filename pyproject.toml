@@ -11,6 +11,11 @@ main = "pysaber.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+cryptography = "^42.0.7"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.1"
 
 
 [build-system]
