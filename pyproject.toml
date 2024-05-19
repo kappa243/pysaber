@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "pysaber"
+version = "0.1.0"
+description = ""
+authors = ["Szymon Idec <szymon.idec@protonmail.com>"]
+license = "MIT License"
+readme = "README.md"
+
+[tool.poetry.scripts]
+main = "pysaber.main:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
