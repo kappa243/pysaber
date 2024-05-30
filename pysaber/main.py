@@ -5,6 +5,7 @@
 import numpy as np
 
 from pysaber.api import CRYPTO_PUBLICKEYBYTES, CRYPTO_SECRETKEYBYTES
+from pysaber.kem import crypto_kem_keypair
 from pysaber.rng import randombytes_init
 from pysaber.saber_indcpa import indcpa_kem_keypair
 
@@ -25,7 +26,8 @@ def main():
 
     ##
 
-    indcpa_kem_keypair(pk, sk)
+    # indcpa_kem_keypair(pk, sk)
+    crypto_kem_keypair(pk, sk)
 
     pass
 
