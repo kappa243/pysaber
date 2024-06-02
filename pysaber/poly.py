@@ -1,3 +1,5 @@
+# For further context refer to section 8.3.8 of documentation
+
 import hashlib
 
 import numpy as np
@@ -25,6 +27,16 @@ def gen_secret(s, seed):
 
 
 def matrix_mul(A, s, res, transpose):
+    """
+    Perform matrix-vector multiplication and store the result in `res`.
+    
+    Args:
+        A (np.ndarray): Input matrix.
+        s (np.ndarray): Input vector.
+        res (np.ndarray): Result vector to store the product.
+        transpose (int): If 1, transpose the matrix A before multiplication.
+        q (int): Coefficient modulus.
+    """
     for i in range(SABER_L):
         for j in range(SABER_L):
             if transpose == 1:
