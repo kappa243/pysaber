@@ -3,9 +3,7 @@ import numpy as np
 from pysaber.api import CRYPTO_PUBLICKEYBYTES, CRYPTO_SECRETKEYBYTES
 from pysaber.saber_indcpa import indcpa_kem_keypair, indcpa_kem_enc
 from pysaber.saber_params import (SABER_INDCPA_PUBLICKEYBYTES,
-                                  SABER_INDCPA_SECRETKEYBYTES, SABER_L, SABER_N,
-                                  SABER_NOISE_SEEDBYTES, SABER_POLYVECCOMPRESSEDBYTES,
-                                  SABER_SEEDBYTES)
+                                  SABER_INDCPA_SECRETKEYBYTES, SABER_BYTES_CCA_DEC)
 from tests.common import rng_init
 from pysaber.pack_unpack import POLVECp2BS, POLVECq2BS, BS2POLVECp, BS2POLmsg, POLT2BS, BS2POLT, POLmsg2BS
 
@@ -48,7 +46,7 @@ def test_indcpa_kem_enc():
     m_bytes = bytes.fromhex(m_hex)
     seed_sp_bytes = bytes.fromhex(seed_sp_hex)
     pk_bytes = bytes.fromhex(pk_hex)
-    ciphertext = np.array([0] * (SABER_POLYVECCOMPRESSEDBYTES + 128), dtype=np.uint8) #TODO: Check the size, it should be 1088 but couldnt get other way to initialize
+    ciphertext = np.array([0] * (SABER_BYTES_CCA_DEC), dtype=np.uint8) #TODO: Check the size, it should be 1088 but couldnt get other way to initialize
     indcpa_kem_enc(m_bytes, seed_sp_bytes, pk_bytes, ciphertext)
 
     result_cipher = ""

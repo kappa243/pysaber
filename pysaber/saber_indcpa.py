@@ -95,8 +95,6 @@ def indcpa_kem_enc(m, seed_sp, pubkey, ciphertext):
         vp[i] = (vp[i] - (mp[i] << (SABER_EP - 1)) + H1) >> (SABER_EP - SABER_ET)
 
     POLT2BS(ciphertext[SABER_POLYVECCOMPRESSEDBYTES:], vp)
-    # ciphertext[:SABER_POLYVECCOMPRESSEDBYTES] = POLVECp2BS(bp)
-    # ciphertext[SABER_POLYVECCOMPRESSEDBYTES:] = POLT2BS(cm)
     return ciphertext
 
 
