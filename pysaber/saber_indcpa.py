@@ -2,7 +2,7 @@ import hashlib
 
 import numpy as np
 
-from pysaber.pack_unpack import POLVECp2BS, POLVECq2BS, BS2POLVECp, BS2POLmsg, POLT2BS
+from pysaber.pack_unpack import POLVECp2BS, POLVECq2BS, BS2POLVECp, BS2POLmsg, POLT2BS, BS2POLT, POLmsg2BS, BS2POLVECq
 from pysaber.poly import gen_matrix, gen_secret, matrix_mul, inner_prod, shift_left, shift_right
 from pysaber.rng import randombytes
 from pysaber.saber_params import (SABER_EP, SABER_EQ, SABER_ET,
@@ -99,4 +99,30 @@ def indcpa_kem_enc(m, seed_sp, pubkey, ciphertext):
 
 
 def indcpa_kem_dec(sk, ciphertext, m):
-    pass
+    """
+    Decrypts a given ciphertext using the IND-CPA KEM (Key Encapsulation Mechanism) decryption scheme.
+
+    Parameters:
+    sk (numpy array): The secret key used for decryption.
+    ciphertext (numpy array): The ciphertext to be decrypted.
+    m (numpy array): The output decrypted message.
+
+    Returns:
+    None: The result is stored in the provided message array m.
+    """
+
+    s = np.zeros((SABER_L, SABER_N), dtype=np.uint16)
+    b = np.zeros((SABER_L, SABER_N), dtype=np.uint16)
+    v = np.zeros((SABER_N), dtype=np.uint16)
+    mp = np.zeros((SABER_N), dtype=np.uint16)
+    cm = np.zeros((SABER_N), dtype=np.uint16)
+
+    BS2POLVECq(sk, s)
+    BS2POLVECp(ciphertext, b)
+    inner_prod(b, s, v)
+    BS2POLT(ciphertext[SABER_POLYVECCOMPRESSEDBYTES:], cm)
+
+    for i in range(SABER_N):
+        v[i] = (v[i] + H2 - (cm[i] << (SABER_EP - SABER_ET))) >> (SABER_EP - 1)
+    
+    POLmsg2BS(m, v)
