@@ -4,6 +4,28 @@ from pysaber.saber_params import SABER_MU, SABER_N
 
 
 def cbd(s, buf):
+    """
+    Compute the centered binomial distribution (CBD) for the SABER KEM scheme based on the SABER parameter `SABER_MU`.
+
+    Parameters:
+    s (numpy.ndarray): The output array that will store the computed centered binomial distribution values.
+    buf (numpy.ndarray): The input buffer containing random bytes used to compute the distribution.
+
+    This function follows different steps based on the value of `SABER_MU`:
+    1. For `SABER_MU == 6`:
+       - Processes 3-byte chunks of `buf` and calculates a centered binomial distribution for each set of 4 coefficients.
+    2. For `SABER_MU == 8`:
+       - Processes 4-byte chunks of `buf` and calculates a centered binomial distribution for each set of 4 coefficients.
+    3. For `SABER_MU == 10`:
+       - Processes 5-byte chunks of `buf` and calculates a centered binomial distribution for each set of 4 coefficients.
+
+    - Uses bitwise operations and shifts to extract and compute the values of `a` and `b` for each coefficient.
+    - Stores the result in the output array `s`.
+
+    Raises:
+    ValueError: If an unsupported value of `SABER_MU` is used.
+    """
+    
     if SABER_MU == 6:
         for i in range(SABER_N // 4):
             buf_view = memoryview(buf)[3 * i:3 * i + 3]

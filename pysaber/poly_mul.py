@@ -1,3 +1,5 @@
+#For further context refer to section 8.3.7 of documentation
+
 import numpy as np
 
 from pysaber.saber_params import SABER_N
@@ -14,10 +16,28 @@ KARATSUBA_N = 64
 
 
 def OVERFLOWING_MUL(X, Y):
+    """
+    Multiplies two 16-bit unsigned integers and returns the lower 16 bits of the result.
+    
+    Args:
+        X (np.uint16): First operand.
+        Y (np.uint16): Second operand.
+
+    Returns:
+        np.uint16: The result of the multiplication truncated to 16 bits.
+    """
     return np.uint16((np.uint32(X) * np.uint32(Y)))
 
 
 def karatsuba_simple(a_1, b_1, result_final):
+    """
+    Performs a simple Karatsuba multiplication on the input polynomials and stores the result.
+
+    Args:
+        a_1 (np.ndarray): First input polynomial.
+        b_1 (np.ndarray): Second input polynomial.
+        result_final (np.ndarray): Array to store the result of the multiplication.
+    """
     d01 = np.zeros(KARATSUBA_N // 2 - 1, dtype=np.uint16)
     d0123 = np.zeros(KARATSUBA_N // 2 - 1, dtype=np.uint16)
     d23 = np.zeros(KARATSUBA_N // 2 - 1, dtype=np.uint16)
@@ -93,6 +113,14 @@ def karatsuba_simple(a_1, b_1, result_final):
 
 
 def toom_cook_4way(a1, b1, result):
+    """
+    Performs Toom-Cook 4-way multiplication on the input polynomials and stores the result.
+
+    Args:
+        a1 (np.ndarray): First input polynomial.
+        b1 (np.ndarray): Second input polynomial.
+        result (np.ndarray): Array to store the result of the multiplication.
+    """
     inv3 = np.uint32(43691)
     inv9 = np.uint32(36409)
     inv15 = np.uint32(61167)
@@ -229,6 +257,14 @@ def toom_cook_4way(a1, b1, result):
 
 
 def poly_mul_acc(a, b, res):
+    """
+    Performs polynomial multiplication using the Toom-Cook 4-way algorithm and accumulates the result.
+
+    Args:
+        a (np.ndarray): First input polynomial.
+        b (np.ndarray): Second input polynomial.
+        res (np.ndarray): Array to accumulate the result of the multiplication.
+    """
     c = np.zeros(2 * SABER_N, dtype=np.uint16)
 
     toom_cook_4way(a, b, c)
