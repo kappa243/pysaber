@@ -114,7 +114,6 @@ def indcpa_kem_dec(sk, ciphertext, m):
     s = np.zeros((SABER_L, SABER_N), dtype=np.uint16)
     b = np.zeros((SABER_L, SABER_N), dtype=np.uint16)
     v = np.zeros((SABER_N), dtype=np.uint16)
-    mp = np.zeros((SABER_N), dtype=np.uint16)
     cm = np.zeros((SABER_N), dtype=np.uint16)
 
     BS2POLVECq(sk, s)
