@@ -3,7 +3,7 @@ import hashlib
 import numpy as np
 
 from pysaber.pack_unpack import POLVECp2BS, POLVECq2BS, BS2POLVECp, BS2POLmsg, POLT2BS, BS2POLT, POLmsg2BS, BS2POLVECq
-from pysaber.poly import gen_matrix, gen_secret, matrix_mul, inner_prod, shift_left, shift_right
+from pysaber.poly import gen_matrix, gen_secret, matrix_mul, inner_prod
 from pysaber.rng import randombytes
 from pysaber.saber_params import (SABER_EP, SABER_EQ, SABER_ET,
                                   SABER_INDCPA_PUBLICKEYBYTES,

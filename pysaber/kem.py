@@ -10,7 +10,16 @@ from pysaber.saber_params import (SABER_INDCPA_PUBLICKEYBYTES,
 from pysaber.verify import verify, cmov
 
 def crypto_kem_keypair(pk, sk):
+    """
+    Generate a public and secret key pair using the SABER KEM IND-CPA secure key generation scheme and augment the secret key with additional security elements.
 
+    Parameters:
+    pk (bytearray): The public key byte string, which will include the packed b and seed_A.
+    sk (bytearray): The secret key byte string, which will include the packed secret vector s and additional security elements.
+
+    Returns:
+    None
+    """
     indcpa_kem_keypair(pk, sk)
 
     for i in range(SABER_INDCPA_PUBLICKEYBYTES):
@@ -24,7 +33,15 @@ def crypto_kem_keypair(pk, sk):
 
 
 def crypto_kem_enc(c, k, pk):
-    # key encapsulation mechanism
+    """
+    Encrypt a message and derive a shared secret key using the SABER KEM IND-CCA secure encapsulation scheme.
+
+    Parameters:
+    c (bytearray): The output ciphertext generated from the public key and random input.
+    k (bytearray): The output shared secret key derived from the ciphertext and public key.
+    pk (bytearray): The public key used for encryption.
+    """
+
     kr = np.zeros(64, dtype=np.uint8)
     buf = np.zeros(64, dtype=np.uint8)
     
@@ -41,8 +58,15 @@ def crypto_kem_enc(c, k, pk):
     k[:] = np.frombuffer(hashlib.sha3_256(kr).digest(), dtype=np.uint8)
 
 
-
 def crypto_kem_dec(k, c, sk):
+    """
+    Decrypt a ciphertext and derive a shared secret key using the SABER KEM IND-CCA secure decapsulation scheme.
+
+    Parameters:
+    k (bytearray): The output shared secret key derived from the ciphertext and secret key.
+    c (bytearray): The input ciphertext to be decrypted.
+    sk (bytearray): The secret key used for decryption.
+    """
     
     buf = np.zeros(64, dtype=np.uint8)
     kr = np.zeros(64, dtype=np.uint8)
